@@ -4,11 +4,14 @@ module RFilemaker
     attr_reader :name
     # Type of the field as symbol
     attr_reader :type
+    # Maxrepeat of th field
+    attr_reader :maxrepeat
     
     def initialize(xml, result_set)
       @name       = xml['NAME']
       @type       = xml['TYPE'] ? xml['TYPE'].downcase.to_sym : :none
       @empty_ok   = xml['EMPTYOK'] == 'YES'
+      @maxrepeat  = xml['MAXREPEAT'].to_i
       @result_set = result_set
     end
 
