@@ -24,6 +24,39 @@ module RFilemaker
       end
     end
 
+    # Return headers(Array) in the <METADATA>..</METADATA>
+    def headers
+      self.fields.map{|i| i.name}
+    end
+
+    # Return attribute TYPE in the <FIELD />
+    def type(name)
+      self.fields.find{|i| i.name == name}.type
+    end
+
+    # Return attribute MAXREPEAT in the <FIELD />
+    def maxrepeat(name)
+      self.fields.find{|i| i.name == name}.maxrepeat
+    end
+        
+    # Get A Row or A Column
+    def [](arg)
+      if arg.is_a? Numeric
+        super
+      else
+        self.map{|i| i[arg]}
+      end
+    end
+
+    class SpecialHash < Hash # :nodoc: all
+        def []=(key, value)
+            super(key, value)
+        end
+
+        def [](key)
+            super(key.to_s)
+        end
+    end
     private # :nodoc: all
       def extract_fields(doc)
         doc.css('METADATA FIELD').collect do |xml|
