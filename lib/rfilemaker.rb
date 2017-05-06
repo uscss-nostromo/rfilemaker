@@ -3,11 +3,11 @@ require 'nokogiri'
 module RFilemaker
   class SpecialHash < Hash # :nodoc: all
     def []=(key, value)
-      super(key.downcase, value)
+      super(key, value)
     end
     
     def [](key)
-      super(key.to_s.downcase)
+      super(key.to_s)
     end
   end
   

@@ -6,7 +6,7 @@ module RFilemaker
       string.gsub(/hh|h/, '%I').gsub(/kk|k/, '%H').gsub(/mm/, '%M').gsub(/ss/, '%S').gsub(/a/, '%p')
     end
 
-    attr_reader :fields, :rows
+    attr_reader :fields, :rows, :number_of_rows
     attr_reader :date_format, :time_format
     
     # Generates a new ResultSet (or plain Ruby Array) for the given XML document
@@ -14,6 +14,7 @@ module RFilemaker
     def initialize(doc)
       @fields = extract_fields(doc)
       @rows   = extract_rows(doc)
+      @number_of_rows = @rows.length
 
       d = doc.css('DATABASE')
       @date_format = ResultSet.parse_date_format(d.attribute('DATEFORMAT').to_s)
@@ -48,15 +49,6 @@ module RFilemaker
       end
     end
 
-    class SpecialHash < Hash # :nodoc: all
-        def []=(key, value)
-            super(key, value)
-        end
-
-        def [](key)
-            super(key.to_s)
-        end
-    end
     private # :nodoc: all
       def extract_fields(doc)
         doc.css('METADATA FIELD').collect do |xml|
