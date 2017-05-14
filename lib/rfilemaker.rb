@@ -1,4 +1,6 @@
+require 'date'
 require 'nokogiri'
+require 'time'
 
 module RFilemaker
   class SpecialHash < Hash # :nodoc: all
