@@ -27,7 +27,8 @@ module RFilemaker
       
       case type
         when :date
-          Date.strptime(value, @result_set.date_format) # unless @empty_ok
+          #Date.strptime(value, @result_set.date_format) # unless @empty_ok
+          Date.parse(value)
         when :time
           DateTime.strptime("1/1/-4712 #{value}", @result_set.time_format) unless @empty_ok
         when :timestamp
